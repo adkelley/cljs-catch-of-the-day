@@ -1,0 +1,52 @@
+* Catch of the Day (CLJS)
+** ShadowCLJS and Cider
+There are some quirks here.  To get a REPL working properly, start the repl (i.e., cider-jack-in-cljs) first, then build and watch the app (i.e., npx shadow-cljs watch app
+), then restart the repl (,).
+** Video 09: Routing with React Router
+After setting up my routes, the browser expected my javascript and css code to be contained within a folder specified by the route (e.g., `localhost:8080/store/`).  I'm not sure how to fix this so, in the meantime, I created a directory `store` in the `public` folder, that contains symbolic links back to the directories `js`, `css` and `images`.
+
+** Video 10: Helper and Utility Functions
+CLJS/Javascript interop with `helpers.js` was straight forward!  In `components/store_picker.cljs`, I declared the js dependency `(:require ["../helpers.js" :refer (getFunName)])` and called the function, `[:input {:type "text" :required true :placeholder "Store Name" :default-value (getFunName)}]`  For more info, see [shadow-cljs/npm](https://shadow-cljs.github.io/docs/UsersGuide.html#_using_npm_packages) for more info.
+
+** Video 11: Events, Refs, and this Binding
+For event handling, an inline function is well suited `:onSubmit (fn [e] ((.preventDefault e) (.log js/console "Hey!!")))`.  I avoided `React/createRef` by using a let expression:
+`(let [fun-name (getFunname)])`.  Getting props is straight forward using [authoring components in hx](https://github.com/Lokeh/hx/blob/master/docs/authoring-components.md).  Here
+we needed the `push` method from the `history` object from React Router.  We get the `history` prop using hx's `[{:keys [history]}]` macro, which gets rid of the boilerpoint when
+extracting a prop from the props object.
+
+** Video 13: Understanding State
+useIRef from [hx.hooks](https://github.com/Lokeh/hx) causes a warning in React that I didn't use a ref-setter function.  It still works, however, so I decided not to switch to `react/useRef`.  TODO: I need to investigate the library author's decision to deviate from `react/useRef`.
+
+
+** Video 14: Loading data into state onClick
+Naturally we're not using JSX to display state, we're using clojure's [hiccup](https://github.com/weavejester/hiccup).
+
+Being a clojure noob, I did find, aftercountless trial and error, that I needed to create different functions for add-fish and load-sample-fishes to denote the difference in `cons` (I'm adding a fish to a collection of fishes) and `conj` (I'm adding a collection of fishes to an existing collection of fishes).  I also learned that a collection and sequence are different, and in order to perform sequable operations on a collection you may have to a collection into a sequence.  TODO: Further reading on the differences a collection and a sequence.
+
+I decided to port sample-fishes.js to sample_fishes.cljs.  This way I'm dealing with clojure's native map data structure.  I also removed the prefix keys (e.g., `fish1`, `fish2`) because of my inability to know what the prefix key is in advance.  I'm sure there's a solution but I'm not aware of it at the moment.  The downside, until I figure how to solve it, is that I cannot display these values (i.e, state) in the React DevTools chrome plugin.  TODO: try going back and treating `fishes` as a native javascript object and use the google closure methods to work on these objects.
+
+
+** Video 15: Displaying State with JSX
+
+I had trouble understanding the difference between `conj` and `cons` during this video.  I also didn't realize that `load-sample-fishes` should reset the state to `sample-fishes`.  Ultimately, by next video, I sorted it out and recognized I only needed `cons` to add a new element to `fishes`.  This [article](https://medium.com/@greg_63957/conj-cons-concat-oh-my-1398a2981eab) gives a good overview of the difference.
+
+I also switched to using `for` instead of `map` when iterating over `fishes`, because I couln't get `#([Fish {:details %}])` to pickup up the `%` (element) from `fishes`.  Instead, calling Fish generated a `Invalid arity: 0` runtime error.  I would've thought that `doseq` would be better because writing a list elements to the DOM is a side-effect.  But I can use `doseq` to print each element to console.
+
+** Video 16: Updating our Order State
+
+`add-to-order` turned out to be a nice example of `assoc`.  I'm treating `order` as a hash-map, adding an :id field to `fishes` to make it easy to find the [k v].  TODO: React is generating a key for each `<li>`, is it possible to access it and use it instead?
+
+** Video 17: Displaying Order State with JSX
+
+Naturally, we're not using JSX to display order state; we're using hiccup.  I've finally grokked the original `sampleFishes` js object and how it can be converted to a clj map `{::fish1 {:name "Salmon"} :fish2 {:name "Oysters"}}` etc.  Consequently, I reverted back to using Wes' `sample-fishes.js` file.  Using `reduce-kv` in `Order` turned out to be very convenient for accessing the details of each fish.
+
+** Video 18: Persisting our State with Firebase
+`Rebase`, the library suggested by this video apparently [doesn't support hooks](https://github.com/tylermcginnis/re-base/issues/264). Instead I leaned on a couple resources:
+[[https://github.com/donavon/use-firebase-database][use-firebase-database]] and [[https://github.com/deg/re-frame-firebase][deg/re-frame-firebase]] to figure out how to initialize and sync a firebase database with my react app using [[https://reactjs.org/docs/hooks-intro.html][React Hooks]]. I also leaned on After lots of trial and error, amazingly it works.  I had a look at [[https://github.com/jedahan/React-For-Beginners-Starter-Files/blob/hooks/catch-of-the-day/src/components/App.js][jedhan's]] solution for guidance too. Some gotchas were knowing when to convert cljs data structures to js and vice versa.
+** Video 19: Persisting Order State with localstorage
+I essentially translated the logic from jedahan's javascript [[https://github.com/jedahan/React-For-Beginners-Starter-Files/blob/hooks/catch-of-the-day/src/hooks/useLocalStorage.js][implementaton]] of a ~useLocalStorage~ hook. This [[https://stackoverflow.com/questions/12655503/how-to-catch-any-javascript-exception-in-clojurescript][reference]] on stackoverflow was useful in figuring out
+the ~try/catch~ syntax
+** Video 20: Bi-directional Data Flow and Live State Editing
+I added the EditFish component to be able to update a fish (e.g., price). One key help here was the documentation for [[https://github.com/weavejester/hiccup/blob/1.0.5/src/hiccup/form.clj][hiccup]], which helped me to code my form elements properly. I also got some practice with ~assoc~.
+** Video 22: Animating React Components
+The CSS animations using the modules [[https://reactcommunity.org/react-transition-group/transition-group][TransitionGroup]] and [[https://reactcommunity.org/react-transition-group/css-transition][CSSTransition]] don't appear to be working.  It's likely my issue, but instead I'm going to attempt to write these css transitions myself using inline styles.

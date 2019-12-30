@@ -1,0 +1,17 @@
+;; shadow-cljs configuration
+{:source-paths
+ ["src"
+  ]
+
+ :dependencies
+ [[lilactown/hx "0.5.3"]
+  [cider/cider-nrepl "0.23.0-SNAPSHOT"]
+  [cider/piggieback "0.4.2"]]
+
+ :builds {:app  {:output-dir "public/js"
+                 :asset-path "./js"
+                 :target :browser
+                 :modules {:main {:init-fn app.main/main!}}
+                 :devtools {:after-load app.main/main!
+                            :http-root "public"
+                            :http-port 8080}}}}

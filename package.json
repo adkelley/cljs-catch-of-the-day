@@ -1,0 +1,21 @@
+{
+  "name": "cljs-react-app",
+  "version": "0.0.1",
+  "private": true,
+  "devDependencies": {
+    "shadow-cljs": "^2.8.39"
+  },
+  "dependencies": {
+    "firebase": "^7.6.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-router-dom": "^5.0.1",
+    "react-transition-group": "^4.3.0"
+  },
+  "scripts": {
+    "start": "yarn shadow-cljs watch app",
+    "repl": "yarn shadow-cljs cljs-repl app",
+    "release": "yarn shadow-cljs release app",
+    "clean": "rm -rf node_modules"
+  }
+}
