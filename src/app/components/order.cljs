@@ -1,10 +1,16 @@
 (ns app.components.order
   (:require [hx.react :refer [defnc]]
             [hx.hooks :refer [useState]]
+            [clojure.spec.alpha :as s]
             ["react-transition-group" :refer [TransitionGroup CSSTransition]]
             ["../helpers.js" :refer (formatPrice)]))
 
 (defnc Order [{:keys [fishes order remove-from-order]}]
+
+  {:pre [s/explain (s/valid? map? fishes)
+         (s/conform (s/or :map map? :nil nil?) order)
+         s/explain (s/valid? fn? remove-from-order)]}
+
   (let [details #(get fishes % {})
         price (fn [id lbs] (* lbs (get (details id) :price 0)))
         name #(get (details %) :name "fish")

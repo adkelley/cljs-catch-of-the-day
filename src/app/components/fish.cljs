@@ -6,6 +6,7 @@
 
 
 (defnc Fish [{:keys [details index add-to-order ]}]
+
   {:pre [s/explain (s/valid? map? details)
          s/explain (s/valid? keyword? index)
          s/explain (s/valid? fn? add-to-order)]}

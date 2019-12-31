@@ -1,9 +1,13 @@
 (ns app.components.add-fish-form
   (:require [hx.react :refer [defnc]]
             [hx.hooks :refer [useIRef]]
+            [clojure.spec.alpha :as s]
             ["../helpers.js" :refer (parsePrice)]))
 
 (defnc AddFishForm [{:keys [add-fish]}]
+
+  {:pre [s/explain (s/valid? fn? add-fish)]}
+
   (let [name-ref  (useIRef nil)
         price-ref (useIRef nil)
         status-ref (useIRef nil)

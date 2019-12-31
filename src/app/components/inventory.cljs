@@ -1,11 +1,20 @@
 (ns app.components.inventory
   (:require [hx.react :refer [defnc]]
+            [clojure.spec.alpha :as s]
             [app.components.add-fish-form :refer [AddFishForm]]
             [app.components.edit-fish-form :refer [EditFishForm]]))
 
-(defnc Inventory [{:keys [store-id add-fish
-                          load-sample-fishes fishes
+(defnc Inventory [{:keys [add-fish load-sample-fishes fishes
                           update-fish delete-fish]}]
+
+  {:pre [s/explain (s/valid? fn? add-fish)
+         s/explain (s/valid? fn? load-sample-fishes)
+         s/explain (s/valid? fn? update-fish)
+         s/explain (s/valid? fn? delete-fish)
+         s/explain (s/valid? map? fishes)
+         ]}
+
+
   [:div {:class "inventory"}
    [:h2 "Inventory"]
    (for [x fishes]
