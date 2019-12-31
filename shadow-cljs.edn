@@ -6,7 +6,8 @@
  :dependencies
  [[lilactown/hx "0.5.3"]
   [cider/cider-nrepl "0.23.0-SNAPSHOT"]
-  [cider/piggieback "0.4.2"]]
+  [cider/piggieback "0.4.2"]
+  [org.clojure/spec.alpha "0.2.176"]]
 
  :builds {:app  {:output-dir "public/js"
                  :asset-path "./js"

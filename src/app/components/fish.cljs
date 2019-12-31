@@ -1,9 +1,15 @@
 (ns app.components.fish
-  (:require [hx.react :as hx :refer [defnc]]
-            ["../helpers.js" :refer (formatPrice)]))
+  (:require
+   [hx.react :as hx :refer [defnc]]
+   ["../helpers.js" :refer (formatPrice)]
+   [clojure.spec.alpha :as s]))
 
 
 (defnc Fish [{:keys [details index add-to-order ]}]
+  {:pre [s/explain (s/valid? map? details)
+         s/explain (s/valid? keyword? index)
+         s/explain (s/valid? fn? add-to-order)]}
+
   (let [image (get details :image)
         name (get details :name)
         price (formatPrice (get details :price))

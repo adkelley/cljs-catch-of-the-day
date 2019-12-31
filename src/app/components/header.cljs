@@ -1,7 +1,10 @@
 (ns app.components.header
-  (:require [hx.react :refer [defnc]]))
+  (:require [hx.react :refer [defnc]]
+            [clojure.spec.alpha :as s]))
 
 (defnc Header [{:keys [tagline]}]
+  {:pre [s/explain (s/valid? string? tagline)]}
+
   [:header {:class "top"}
    [:h1 "Catch"
     [:span {:class "ofThe"}
