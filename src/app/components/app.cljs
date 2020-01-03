@@ -14,8 +14,8 @@
 (defnc App [{:keys [match]}]
   (let [store-id (.. match -params -storeId)
         path [store-id "fishes"]
-        app (init-firebase firebaseConfig)
-        [fishes set-fishes] (use-value {:app app :path path :init-value {}})
+        fb-app (init-firebase firebaseConfig)
+        [fishes set-fishes] (use-value {:app fb-app :path path :init-value {}})
         [order set-order] (use-local-storage {:id store-id :initial-value {}})
         add-fish #(set-fishes (conj fishes %))
         update-fish #(set-fishes (assoc fishes %1 %2))
@@ -35,4 +35,5 @@
                  :load-sample-fishes load-sample-fishes
                  :fishes fishes
                  :update-fish update-fish
-                 :delete-fish delete-fish}]]))
+                 :delete-fish delete-fish
+                 :fb-app fb-app}]]))

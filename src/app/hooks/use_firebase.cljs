@@ -2,6 +2,7 @@
   (:require [clojure.string :as str]
             [hx.hooks :as hooks]
             ["firebase/app" :as firebase-app :refer [initializeApp database]]
+            ["firebase/auth"]
             ["firebase/database" :as firebase-database]))
 
 
@@ -39,3 +40,17 @@
                      (clj->js [ref]))
     [value set])
   )
+
+
+(defn create-auth-provider [{:keys [app]}]
+  (let [provider (js/firebase.auth.GithubAuthProvider)]
+    provider)
+  )
+
+
+
+;; (defn use-auth
+;;   "Creates a react hook that authorizes a user to access a firebase database
+;;    This logic was copied from "
+
+;;   )
