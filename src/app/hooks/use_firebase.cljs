@@ -2,7 +2,7 @@
   (:require [clojure.string :as str]
             [hx.hooks :as hooks]
             ["firebase/app" :as firebase-app :refer [initializeApp database]]
-            ["firebase/database" :as firebase-database]))
+            ["firebase/database"]))
 
 
 (defn init-firebase

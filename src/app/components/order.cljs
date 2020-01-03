@@ -7,7 +7,7 @@
 
 (defnc Order [{:keys [fishes order remove-from-order]}]
 
-  {:pre [s/explain (s/valid? map? fishes)
+  {:pre [(s/conform (s/or :map map? :nil nil?) fishes)
          (s/conform (s/or :map map? :nil nil?) order)
          s/explain (s/valid? fn? remove-from-order)]}
 
