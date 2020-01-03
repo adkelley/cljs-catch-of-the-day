@@ -14,7 +14,7 @@
          s/explain (s/valid? fn? load-sample-fishes)
          s/explain (s/valid? fn? update-fish)
          s/explain (s/valid? fn? delete-fish)
-         s/explain (s/valid? map? fishes)
+         (s/conform (s/or :map map? :nil nil?) fishes)
          ]}
 
   (let [authenticate #(js/alert %)
