@@ -17,9 +17,7 @@
          (s/conform (s/or :map map? :nil nil?) fishes)
          ]}
 
-  (let [authenticate #(js/alert %)
-        provider (create-auth-provider {:app fb-app })]
-    [Login {:authenticate authenticate}])
+  [Login {:authenticate #(create-auth-provider)}]
 
 
   ;; [:div {:class "inventory"}

@@ -1,9 +1,8 @@
 (ns app.hooks.use-firebase
   (:require [clojure.string :as str]
             [hx.hooks :as hooks]
-            ["firebase/app" :as firebase-app :refer [initializeApp database]]
-            ["firebase/auth" :as firebase-auth]
-            ["firebase/database" :as firebase-database]
+            ["firebase/app" :as firebase-app]
+            ["firebase/auth"]
             ["firebase/database"]))
 
 
@@ -13,14 +12,14 @@
    to be converted to JavaScript object format"
   [firebaseConfig]
   (if (= 0 firebase-app/apps.length)
-    (initializeApp firebaseConfig)
+    (firebase-app/initializeApp firebaseConfig)
     (nth firebase-app/apps 0)))
 
 (defn- join-path [path]
   (str/join "/" (clj->js path)))
 
 (defn- fb-ref [path]
-  (.ref (database)
+  (.ref (.database firebase-app)
         (join-path path)))
 
 (defn use-value
@@ -43,16 +42,26 @@
     [value set])
   )
 
+(defn- auth-handler
+  [auth-data]
+  (js/console.log "Auth Data:" auth-data))
 
-(defn create-auth-provider [{:keys [app]}]
-  (let [provider (js/firebase.auth.GithubAuthProvider)]
-    provider)
-  )
+(defn- oauth-sign-in
+  [auth-provider]
+
+  (-> (firebase-app/auth)
+      (.signInWithPopup auth-provider)
+      (.then #(auth-handler %))
+      (.catch (println "Hello it didn't work"))))
+
+
+  (defn create-auth-provider []
+    (oauth-sign-in (firebase-app/auth.GithubAuthProvider.)))
 
 
 
-;; (defn use-auth
-;;   "Creates a react hook that authorizes a user to access a firebase database
-;;    This logic was copied from "
+    ;; (defn use-auth
+    ;;   "Creates a react hook that authorizes a user to access a firebase database
+    ;;    This logic was copied from "
 
-;;   )
+    ;;   )

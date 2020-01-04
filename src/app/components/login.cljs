@@ -10,5 +10,5 @@
    [:h2 "Inventory Login"]
    [:p "Sign in to manage your store's inventory."]
    [:button {:class "github"
-             :onClick #(authenticate "github")}
+             :onClick #(authenticate)}
     "Login with Github"]])
