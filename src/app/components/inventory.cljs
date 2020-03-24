@@ -17,14 +17,14 @@
          (s/conform (s/or :map map? :nil nil?) fishes)
          ]}
 
-  [Login {:authenticate #(create-auth-provider)}]
+  ;; [Login {:authenticate #(create-auth-provider)}]
 
 
-  ;; [:div {:class "inventory"}
-  ;;  [:h2 "Inventory"]
-  ;;  (for [x fishes]
-  ;;    [EditFishForm {:fish (val x) :index (key x)
-  ;;                   :update-fish update-fish :delete-fish delete-fish}])
-  ;;  [AddFishForm {:add-fish add-fish}]
-  ;;  [:button {:on-click load-sample-fishes} "Load Sample Fishes"]]
+  [:div {:class "inventory"}
+   [:h2 "Inventory"]
+   (for [x fishes]
+     [EditFishForm {:fish (val x) :index (key x)
+                    :update-fish update-fish :delete-fish delete-fish}])
+   [AddFishForm {:add-fish add-fish}]
+   [:button {:on-click load-sample-fishes} "Load Sample Fishes"]]
   )
