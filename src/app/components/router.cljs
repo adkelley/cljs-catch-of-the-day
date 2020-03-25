@@ -1,5 +1,5 @@
 (ns app.components.router
-  (:require [hx.react :refer [defnc]]
+  (:require [helix.core :refer [defnc $]]
             [react-router-dom :refer [BrowserRouter Route Switch]]
             [app.components.store-picker :refer [StorePicker]]
             [app.components.app :refer [App]]
@@ -7,8 +7,8 @@
 
 
 (defnc Router []
-  [BrowserRouter
-   [Switch
-    [Route {:exact true :path "/" :component StorePicker}]
-    [Route {:path "/store/:storeId" :component App}]
-    [Route {:component NotFound}]]])
+  ($ BrowserRouter
+     ($ Switch
+        ($ Route {:exact true :path "/" :component StorePicker})
+        ($ Route {:path "/store/:storeId" :component App})
+        ($ Route {:component NotFound}))))

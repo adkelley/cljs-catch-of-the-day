@@ -1,5 +1,6 @@
 (ns app.components.store-picker
-  (:require [hx.react :refer [defnc]]
+  (:require [helix.core :refer [defnc]]
+            [helix.dom :as d]
             ["../helpers.js" :refer (getFunName)]))
 
 (defn goto-store [e fun-name history]
@@ -11,7 +12,7 @@
 
 (defnc StorePicker [{:keys [history]}]
   (let [fun-name (getFunName)]
-    [:form {:class "store-selector" :onSubmit (fn [e] (goto-store e fun-name history))}
-     [:h2 "Enter A Store"]
-     [:input {:type "text" :required true :placeholder "Store Name" :default-value fun-name}]
-     [:button {:type "submit"} "Visit Store ->"]]))
+    (d/form {:class "store-selector" :onSubmit (fn [e] (goto-store e fun-name history))}
+            (d/h2 "Enter A Store")
+            (d/input {:type "text" :required true :placeholder "Store Name" :default-value fun-name})
+            (d/button {:type "submit"} "Visit Store ->"))))

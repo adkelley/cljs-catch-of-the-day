@@ -1,6 +1,6 @@
 (ns app.components.app
-  (:require [hx.react :as hx :refer [defnc]]
-            [hx.hooks :as hooks :refer [useState]]
+  (:require [helix.core :refer [defnc $]]
+            [helix.dom :as d]
             [app.components.header :refer [Header]]
             [app.components.inventory :refer [Inventory]]
             [app.components.order :refer [Order]]
@@ -25,15 +25,16 @@
         delete-fish #(set-fishes (dissoc fishes %))]
 
 
-    [:div {:class "catch-of-the-day"}
-     [:div {:class "menu"}
-      [Header {:tagline "Fresh Seafood Market"}]
-      (for [x fishes]
-        [Fish {:details (val x) :index (key x) :add-to-order add-to-order}])]
-     [Order {:fishes fishes :order order :remove-from-order remove-from-order}]
-     [Inventory {:add-fish add-fish
-                 :load-sample-fishes load-sample-fishes
-                 :fishes fishes
-                 :update-fish update-fish
-                 :delete-fish delete-fish
-                 :fb-app fb-app}]]))
+    (d/div {:class "catch-of-the-day"}
+           (d/div {:class "menu"}
+                  ($ Header {:tagline "Fresh Seafood Market"})
+                  (for [x fishes]
+                    ($ Fish {:details (val x) :index (key x) :add-to-order add-to-order})))
+           ($ Order {:fishes fishes :order order :remove-from-order remove-from-order})
+           ($ Inventory {:add-fish add-fish
+                         :load-sample-fishes load-sample-fishes
+                         :fishes fishes
+                         :update-fish update-fish
+                         :delete-fish delete-fish
+                         :fb-app fb-app})))
+  )

@@ -1,5 +1,5 @@
 (ns app.main
-  (:require [hx.react :as hx]
+  (:require [helix.core :refer [defnc $]]
             [react-dom :as react-dom]
             [app.components.router :refer [Router]]
             ))
@@ -7,5 +7,5 @@
 
 (defn main! []
   (react-dom/render
-   (hx/f [Router])
+   ($ Router)
    (. js/document getElementById "main")))

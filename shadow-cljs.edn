@@ -4,7 +4,8 @@
   ]
 
  :dependencies
- [[lilactown/hx "0.5.3"]
+ [[lilactown/helix "0.0.10"]
+  [lilactown/hx "0.5.3"]
   [cider/cider-nrepl "0.24.0"]
   [cider/piggieback "0.4.2"]
   [org.clojure/spec.alpha "0.2.176"]]

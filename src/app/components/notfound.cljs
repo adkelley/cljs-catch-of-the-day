@@ -1,6 +1,7 @@
 (ns app.components.notfound
-  (:require [hx.react :refer [defnc]]))
+  (:require [helix.core :refer [defnc]]
+            [helix.dom :as d]))
 
 (defnc NotFound []
-  [:div
-   [:h2 "Not Found"]])
+  (d/div
+   (d/h2 "Not Found")))
