@@ -1,5 +1,3 @@
-
-
 # Catch of the Day (CLJS)
 
 
@@ -16,7 +14,7 @@ I'm using it as a replacment for [create-react-app](<https://github.com/facebook
 
 ## CLJS/React Framework
 
-[hx](<https://github.com/Lokeh/hx>) which offers a thinner wrapper than [reagent](<https://github.com/reagent-project/reagent>) for ClojureScript development in React; See [Why not Reagent](<https://github.com/Lokeh/hx/blob/master/docs/why-not-reagent.md>) as to why, in 2019, React makes a thin wrapper in ClojureScript perfectly viable.
+[helix](<https://github.com/Lokeh/helix>) which offers a thinner wrapper than [reagent](<https://github.com/reagent-project/reagent>) for ClojureScript development in React; See [Why not Reagent](<https://github.com/Lokeh/hx/blob/master/docs/why-not-reagent.md>) as to why, in 2019, React makes a thin wrapper in ClojureScript perfectly viable.
 
 
 ## Installation
