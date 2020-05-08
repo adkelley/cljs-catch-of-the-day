@@ -1,6 +1,7 @@
 (ns app.components.fish
   (:require
-   [hx.react :as hx :refer [defnc]]
+   [helix.core :refer [defnc]]
+   [helix.dom :as d]
    ["../helpers.js" :refer (formatPrice)]
    [clojure.spec.alpha :as s]))
 
@@ -16,9 +17,10 @@
         price (formatPrice (get details :price))
         desc (get details :desc)
         is-available (= (get details :status) "available")]
-    [:li {:class "menu-fish"}
-     [:img {:src image :alt name}]
-     [:h3 {:class "fish-name"} name
-      [:span {:class "price"} price]]
-     [:p desc]
-     [:button {:disabled (not is-available) :onClick #(add-to-order index)} (if is-available "Add To Cart" "Sold Out")]]))
+
+    (d/li {:class "menu-fish"}
+          (d/img {:src image :alt name})
+          (d/h3 {:class "fish-name"} name
+                (d/span {:class "price"} price))
+          (d/p desc)
+          (d/button {:disabled (not is-available) :onClick #(add-to-order index)} (if is-available "Add To Cart" "Sold Out")))))

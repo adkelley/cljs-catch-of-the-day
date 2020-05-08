@@ -1,7 +1,7 @@
 (ns app.components.edit-fish-form
-  (:require
-   [clojure.spec.alpha :as s]
-   [hx.react :refer [defnc]]))
+  (:require [clojure.spec.alpha :as s]
+            [helix.core :refer [defnc]]
+            [helix.dom :as d]))
 
 (defnc EditFishForm [{:keys [index fish update-fish delete-fish]}]
 
@@ -16,13 +16,12 @@
                              updated-fish (assoc fish name_ value)]
                          (update-fish index updated-fish)))]
 
-    [:div {:class "fish-edit"}
-     [:input {:type "text" :name "name" :onChange #(handleChange %) :value (fish :name)}]
-     [:input {:type "text" :name "price" :onChange #(handleChange %) :value (fish :price)}]
-     [:select {:type "text" :name "status" :onChange #(handleChange %) :value (fish :status)}
-      [:option {:onChange #(handleChange %) :value "available"} "Fresh!"]
-      [:option {:onChange #(handleChange %) :value "unavailable"} "Sold Out!"]]
-     [:textarea {:name "desc" :onChange #(handleChange %) :value (fish :desc)}]
-     [:input {:type "text" :name "image" :onChange #(handleChange %) :value (fish :image)}]
-     [:button {:onClick #(delete-fish index)} "Remove Fish"]])
-  )
+    (d/div {:class "fish-edit"}
+           (d/input {:type "text" :name "name" :onChange #(handleChange %) :value (fish :name)})
+           (d/input {:type "text" :name "price" :onChange #(handleChange %) :value (fish :price)})
+           (d/select {:type "text" :name "status" :onChange #(handleChange %) :value (fish :status)}
+                     (d/option {:onChange #(handleChange %) :value "available"} "Fresh!")
+                     (d/option {:onChange #(handleChange %) :value "unavailable"} "Sold Out!"))
+           (d/textarea {:name "desc" :onChange #(handleChange %) :value (fish :desc)})
+           (d/input {:type "text" :name "image" :onChange #(handleChange %) :value (fish :image)})
+           (d/button {:onClick #(delete-fish index)} "Remove Fish"))))

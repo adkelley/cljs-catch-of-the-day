@@ -1,14 +1,15 @@
 (ns app.components.login
   (:require
-   [hx.react :as hx :refer [defnc]]
+   [helix.core :refer [defnc]]
+   [helix.dom :as d]
    [clojure.spec.alpha :as s]))
 
 (defnc Login [{:keys [authenticate]}]
   {:pre [(s/valid? fn? authenticate)]}
 
-  [:nav {:class "login"}
-   [:h2 "Inventory Login"]
-   [:p "Sign in to manage your store's inventory."]
-   [:button {:class "github"
-             :onClick #(authenticate)}
-    "Login with Github"]])
+  (d/nav {:class "login"}
+         (d/h2 "Inventory Login")
+         (d/p "Sign in to manage your store's inventory.")
+         (d/button {:class "github"
+                    :onClick #(authenticate)}
+                   "Login with Github")))
